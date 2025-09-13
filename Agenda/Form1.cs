@@ -1,21 +1,11 @@
-﻿using Newtonsoft.Json;
-using Practica1_Agenda.Clases;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using Agenda.Clases;
+using Newtonsoft.Json;
 
 namespace Practica1_Agenda
 {
     public partial class Form1 : Form
     {
-        string direccion = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "agenda.json");
+        private BDJson baseDatos;
         public Form1()
         {
             InitializeComponent();
@@ -28,30 +18,10 @@ namespace Practica1_Agenda
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (File.Exists(direccion))
-            {
-                try
-                {
-                    string json = File.ReadAllText(direccion);
-                    var registros = JsonConvert.DeserializeObject<BDJson>(json);
-                    cargarRegistros(registros);
-                    SLRegistros.Text = "Num Registros: " + (dgvDatos.RowCount - 1);
-                    SLFecha.Text = registros.UltimaActualizacion.ToString();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("ERROR "+ex.Message, "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
         }
 
         private void cargarRegistros(BDJson registros)
         {
-            foreach (var perona in registros.personas)
-            {
-                dgvDatos.Rows.Add(new object[] { perona.nombre, perona.apPat, perona.apMat, perona.direccion, perona.telefono, perona.correo});
-            }
-
         }
 
         private BDJson cargardatos()
@@ -71,8 +41,10 @@ namespace Practica1_Agenda
                     personas.telefono = (fila.Cells[4].Value ?? "").ToString();
                     personas.correo = (fila.Cells[5].Value ?? "").ToString();
                 }
-                registros.personas.Add(personas);   
+                registros.personas.Add(personas);
             }
+            registros.TotalRegistros = registros.personas.Count;
+            registros.UltimaActualizacion = DateTime.Now;
             return registros;
         }
 
@@ -85,58 +57,25 @@ namespace Practica1_Agenda
                 NullValueHandling = NullValueHandling.Ignore,
             };
             string json = JsonConvert.SerializeObject(lista, caracteristicas);
-            File.WriteAllText(direccion, json);
+            File.WriteAllText(sfdJason.FileName, json);
         }
 
         private void dgvDatos_RowLeave(object sender, DataGridViewCellEventArgs e)
         {
-            try
-            {
-                dgvDatos.EndEdit();
-                var baseDatos = cargardatos();
-                guardarJson(baseDatos);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+           
         }
 
         private void dgvDatos_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-            try
-            {
-                dgvDatos.EndEdit();
-                var baseDatos = cargardatos();
-                guardarJson(baseDatos);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, "Sistema", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+           
         }
-
-        private void borrarTSM_Click(object sender, EventArgs e)
-        {
-            dgvDatos.Rows.Clear();
-            var baseDatos = cargardatos();
-            guardarJson(baseDatos);
-        }
-
         private void colorTSM_Click(object sender, EventArgs e)
         {
-            if(colorD.ShowDialog() == DialogResult.OK)
+            if (colorD.ShowDialog() == DialogResult.OK)
             {
                 this.BackColor = colorD.Color;
             }
         }
-
-        private void infoTSM_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Creado por Bryam Joseph Jaramillo Sandoval","Informacion",MessageBoxButtons.OK,MessageBoxIcon.Information);
-        }
-
-        
 
         private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -146,6 +85,61 @@ namespace Practica1_Agenda
         private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+        private void CargarRegistros(BDJson registros)
+        {
+            dgvDatos.Rows.Clear();
+            foreach (var contacto in registros.personas)
+            {
+                dgvDatos.Rows.Add(new object[]
+                { contacto.nombre, contacto.apPat, contacto.apMat, contacto.direccion, contacto.telefono, contacto.correo });
+            }
+        }
+        private void ActualizarStatus(BDJson registros)
+        {
+            SLRegistros.Text = $"Registros: {registros.TotalRegistros}";
+            SLFecha.Text = $"Última actualización: {registros.UltimaActualizacion:dd/MM/yyyy HH:mm:ss}";
+        }
+
+
+        private void butGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var baseDatos = cargardatos(); 
+                if (sfdJason.ShowDialog() == DialogResult.OK)
+                {
+                    guardarJson(baseDatos);
+                    ActualizarStatus(baseDatos);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Sistema",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void butCargar_Click(object sender, EventArgs e)
+        {
+
+            if (ofdJason.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string json = File.ReadAllText(ofdJason.FileName);
+                    var registros = JsonConvert.DeserializeObject<BDJson>(json);
+                    CargarRegistros(registros);
+                    ActualizarStatus(registros);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message, "Sistema",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
+            }
         }
     }
 }

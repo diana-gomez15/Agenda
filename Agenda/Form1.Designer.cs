@@ -32,7 +32,6 @@
             menuStrip1 = new MenuStrip();
             opcionesToolStripMenuItem = new ToolStripMenuItem();
             salirTSM = new ToolStripMenuItem();
-            borrarTSM = new ToolStripMenuItem();
             variosToolStripMenuItem = new ToolStripMenuItem();
             colorTSM = new ToolStripMenuItem();
             statusStrip1 = new StatusStrip();
@@ -46,6 +45,10 @@
             Direccion = new DataGridViewTextBoxColumn();
             Tel = new DataGridViewTextBoxColumn();
             Correo = new DataGridViewTextBoxColumn();
+            butGuardar = new Button();
+            butCargar = new Button();
+            sfdJason = new SaveFileDialog();
+            ofdJason = new OpenFileDialog();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
@@ -59,13 +62,13 @@
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new Padding(8, 3, 0, 3);
-            menuStrip1.Size = new Size(1189, 30);
+            menuStrip1.Size = new Size(862, 30);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
             // opcionesToolStripMenuItem
             // 
-            opcionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { salirTSM, borrarTSM });
+            opcionesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { salirTSM });
             opcionesToolStripMenuItem.Name = "opcionesToolStripMenuItem";
             opcionesToolStripMenuItem.Size = new Size(85, 24);
             opcionesToolStripMenuItem.Text = "Opciones";
@@ -73,23 +76,16 @@
             // salirTSM
             // 
             salirTSM.Name = "salirTSM";
-            salirTSM.Size = new Size(171, 26);
+            salirTSM.Size = new Size(224, 26);
             salirTSM.Text = "Salir";
             salirTSM.Click += salirToolStripMenuItem_Click;
-            // 
-            // borrarTSM
-            // 
-            borrarTSM.Name = "borrarTSM";
-            borrarTSM.Size = new Size(171, 26);
-            borrarTSM.Text = "Borrar Todo";
-            borrarTSM.Click += borrarTSM_Click;
             // 
             // variosToolStripMenuItem
             // 
             variosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { colorTSM });
             variosToolStripMenuItem.Name = "variosToolStripMenuItem";
-            variosToolStripMenuItem.Size = new Size(63, 24);
-            variosToolStripMenuItem.Text = "Varios";
+            variosToolStripMenuItem.Size = new Size(106, 24);
+            variosToolStripMenuItem.Text = "Propiedades";
             // 
             // colorTSM
             // 
@@ -103,10 +99,10 @@
             statusStrip1.BackColor = SystemColors.ActiveCaption;
             statusStrip1.ImageScalingSize = new Size(20, 20);
             statusStrip1.Items.AddRange(new ToolStripItem[] { SLRegistros, SLFecha });
-            statusStrip1.Location = new Point(0, 666);
+            statusStrip1.Location = new Point(0, 545);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new Padding(1, 0, 19, 0);
-            statusStrip1.Size = new Size(1189, 26);
+            statusStrip1.Size = new Size(862, 26);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
             statusStrip1.ItemClicked += statusStrip1_ItemClicked;
@@ -128,11 +124,11 @@
             dgvDatos.BackgroundColor = SystemColors.ButtonHighlight;
             dgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvDatos.Columns.AddRange(new DataGridViewColumn[] { Nombre, ApellidoP, ApellidoM, Direccion, Tel, Correo });
-            dgvDatos.Location = new Point(16, 126);
+            dgvDatos.Location = new Point(3, 73);
             dgvDatos.Margin = new Padding(4, 5, 4, 5);
             dgvDatos.Name = "dgvDatos";
             dgvDatos.RowHeadersWidth = 51;
-            dgvDatos.Size = new Size(875, 452);
+            dgvDatos.Size = new Size(811, 360);
             dgvDatos.TabIndex = 0;
             dgvDatos.CellContentClick += dgvDatos_CellContentClick;
             dgvDatos.RowLeave += dgvDatos_RowLeave;
@@ -180,12 +176,38 @@
             Correo.Name = "Correo";
             Correo.Width = 125;
             // 
+            // butGuardar
+            // 
+            butGuardar.Location = new Point(164, 454);
+            butGuardar.Name = "butGuardar";
+            butGuardar.Size = new Size(170, 61);
+            butGuardar.TabIndex = 3;
+            butGuardar.Text = "Guardar";
+            butGuardar.UseVisualStyleBackColor = true;
+            butGuardar.Click += butGuardar_Click;
+            // 
+            // butCargar
+            // 
+            butCargar.Location = new Point(376, 455);
+            butCargar.Name = "butCargar";
+            butCargar.Size = new Size(147, 60);
+            butCargar.TabIndex = 4;
+            butCargar.Text = "Cargar";
+            butCargar.UseVisualStyleBackColor = true;
+            butCargar.Click += butCargar_Click;
+            // 
+            // ofdJason
+            // 
+            ofdJason.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LavenderBlush;
-            ClientSize = new Size(1189, 692);
+            ClientSize = new Size(862, 571);
+            Controls.Add(butCargar);
+            Controls.Add(butGuardar);
             Controls.Add(statusStrip1);
             Controls.Add(dgvDatos);
             Controls.Add(menuStrip1);
@@ -212,7 +234,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel SLRegistros;
         private System.Windows.Forms.ToolStripStatusLabel SLFecha;
-        private System.Windows.Forms.ToolStripMenuItem borrarTSM;
         private System.Windows.Forms.ToolStripMenuItem variosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorTSM;
         private System.Windows.Forms.ColorDialog colorD;
@@ -223,6 +244,10 @@
         private DataGridViewTextBoxColumn Direccion;
         private DataGridViewTextBoxColumn Tel;
         private DataGridViewTextBoxColumn Correo;
+        private Button butGuardar;
+        private Button butCargar;
+        private SaveFileDialog sfdJason;
+        private OpenFileDialog ofdJason;
     }
 }
 

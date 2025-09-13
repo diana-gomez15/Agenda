@@ -9,33 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="bin\Clases\BDJson.cs" />
-    <Compile Include="bin\Clases\persona.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="bin\Debug\agenda.json" />
-    <Content Include="bin\Debug\Newtonsoft.Json.Bson.xml" />
-    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\AxInterop.WMPLib.dll" />
-    <None Include="bin\Debug\Interop.WMPLib.dll" />
-    <None Include="bin\Debug\Newtonsoft.Json.Bson.dll" />
-    <None Include="bin\Debug\Newtonsoft.Json.Bson.pdb" />
-    <None Include="bin\Debug\Newtonsoft.Json.dll" />
-    <None Include="bin\Debug\Practica1_Agenda.exe" />
-    <None Include="bin\Debug\Practica1_Agenda.exe.config" />
-    <None Include="bin\Debug\Practica1_Agenda.pdb" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="bin\Debug\net8.0-windows\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,6 +10,7 @@ namespace Agenda.Clases
     {
         public List<persona> personas { get; set; }
         public DateTime UltimaActualizacion { get; set; }
+        public int TotalRegistros { get; set; }
         public BDJson()
         {
             personas = new List<persona>();
