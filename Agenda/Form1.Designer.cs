@@ -178,7 +178,7 @@
             // 
             // butGuardar
             // 
-            butGuardar.Location = new Point(164, 454);
+            butGuardar.Location = new Point(238, 454);
             butGuardar.Name = "butGuardar";
             butGuardar.Size = new Size(170, 61);
             butGuardar.TabIndex = 3;
@@ -188,7 +188,7 @@
             // 
             // butCargar
             // 
-            butCargar.Location = new Point(376, 455);
+            butCargar.Location = new Point(426, 455);
             butCargar.Name = "butCargar";
             butCargar.Size = new Size(147, 60);
             butCargar.TabIndex = 4;
