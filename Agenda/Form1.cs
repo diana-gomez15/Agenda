@@ -6,6 +6,7 @@ namespace Practica1_Agenda
     public partial class Form1 : Form
     {
         private BDJson baseDatos;
+        private string rutaArchivoActual = "";
         public Form1()
         {
             InitializeComponent();
@@ -13,17 +14,9 @@ namespace Practica1_Agenda
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            GuardarAutomaticamente();
             this.Close();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void cargarRegistros(BDJson registros)
-        {
-        }
-
+        }       
         private BDJson cargardatos()
         {
             var registros = new BDJson();
@@ -31,7 +24,7 @@ namespace Practica1_Agenda
             {
                 if (fila.IsNewRow) continue;
 
-                if (fila.Cells[0].Value == null) continue;
+
                 var personas = new persona();
                 {
                     personas.nombre = (fila.Cells[0].Value ?? "").ToString();
@@ -48,7 +41,7 @@ namespace Practica1_Agenda
             return registros;
         }
 
-        private void guardarJson(BDJson lista)
+        private void guardarJson(BDJson lista, string ruta)
         {
             var caracteristicas = new JsonSerializerSettings
             {
@@ -57,34 +50,40 @@ namespace Practica1_Agenda
                 NullValueHandling = NullValueHandling.Ignore,
             };
             string json = JsonConvert.SerializeObject(lista, caracteristicas);
-            File.WriteAllText(sfdJason.FileName, json);
+            File.WriteAllText(ruta, json);
         }
-
+        private void GuardarAutomaticamente()
+        {
+            if (!string.IsNullOrEmpty(rutaArchivoActual) && dgvDatos.Rows.Count > 0)
+            {
+                try
+                {
+                    var datos = cargardatos();
+                    guardarJson(datos, rutaArchivoActual);
+                    ActualizarStatus(datos);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al autoguardar: {ex.Message}");
+                }
+            }
+        }
         private void dgvDatos_RowLeave(object sender, DataGridViewCellEventArgs e)
         {
-           
+            GuardarAutomaticamente();
         }
 
         private void dgvDatos_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-           
+            GuardarAutomaticamente();
         }
+
         private void colorTSM_Click(object sender, EventArgs e)
         {
             if (colorD.ShowDialog() == DialogResult.OK)
             {
                 this.BackColor = colorD.Color;
             }
-        }
-
-        private void dgvDatos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
         }
         private void CargarRegistros(BDJson registros)
         {
@@ -100,7 +99,7 @@ namespace Practica1_Agenda
             SLRegistros.Text = $"Registros: {registros.TotalRegistros}";
             SLFecha.Text = $"Última actualización: {registros.UltimaActualizacion:dd/MM/yyyy HH:mm:ss}";
         }
- 
+
         private void butCargar_Click(object sender, EventArgs e)
         {
 
@@ -108,6 +107,7 @@ namespace Practica1_Agenda
             {
                 try
                 {
+                    rutaArchivoActual = ofdJason.FileName;
                     string json = File.ReadAllText(ofdJason.FileName);
                     var registros = JsonConvert.DeserializeObject<BDJson>(json);
                     CargarRegistros(registros);
@@ -115,12 +115,26 @@ namespace Practica1_Agenda
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message, "Sistema",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error: " + ex.Message, "Sistema",MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
 
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (sfdJason.ShowDialog() == DialogResult.OK)
+            {             
+                    rutaArchivoActual = sfdJason.FileName;
+                    var datos = cargardatos();
+                    guardarJson(datos, rutaArchivoActual);
+                    ActualizarStatus(datos);
+  
+            }
+
+
+
         }
     }
 }

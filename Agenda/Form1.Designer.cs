@@ -48,6 +48,7 @@
             butCargar = new Button();
             sfdJason = new SaveFileDialog();
             ofdJason = new OpenFileDialog();
+            butNombrar = new Button();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDatos).BeginInit();
@@ -89,7 +90,7 @@
             // colorTSM
             // 
             colorTSM.Name = "colorTSM";
-            colorTSM.Size = new Size(224, 26);
+            colorTSM.Size = new Size(195, 26);
             colorTSM.Text = "Color de Fondo";
             colorTSM.Click += colorTSM_Click;
             // 
@@ -128,7 +129,6 @@
             dgvDatos.RowHeadersWidth = 51;
             dgvDatos.Size = new Size(811, 360);
             dgvDatos.TabIndex = 0;
-         
             // 
             // Nombre
             // 
@@ -186,12 +186,23 @@
             // 
             ofdJason.FileName = "openFileDialog1";
             // 
+            // butNombrar
+            // 
+            butNombrar.Location = new Point(251, 455);
+            butNombrar.Name = "butNombrar";
+            butNombrar.Size = new Size(147, 60);
+            butNombrar.TabIndex = 5;
+            butNombrar.Text = "Nombrar Archivo";
+            butNombrar.UseVisualStyleBackColor = true;
+            butNombrar.Click += button1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LavenderBlush;
             ClientSize = new Size(862, 571);
+            Controls.Add(butNombrar);
             Controls.Add(butCargar);
             Controls.Add(statusStrip1);
             Controls.Add(dgvDatos);
@@ -231,6 +242,7 @@
         private Button butCargar;
         private SaveFileDialog sfdJason;
         private OpenFileDialog ofdJason;
+        private Button butNombrar;
     }
 }
 
