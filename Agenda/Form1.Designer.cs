@@ -45,7 +45,6 @@
             Direccion = new DataGridViewTextBoxColumn();
             Tel = new DataGridViewTextBoxColumn();
             Correo = new DataGridViewTextBoxColumn();
-            butGuardar = new Button();
             butCargar = new Button();
             sfdJason = new SaveFileDialog();
             ofdJason = new OpenFileDialog();
@@ -76,7 +75,7 @@
             // salirTSM
             // 
             salirTSM.Name = "salirTSM";
-            salirTSM.Size = new Size(224, 26);
+            salirTSM.Size = new Size(121, 26);
             salirTSM.Text = "Salir";
             salirTSM.Click += salirToolStripMenuItem_Click;
             // 
@@ -90,7 +89,7 @@
             // colorTSM
             // 
             colorTSM.Name = "colorTSM";
-            colorTSM.Size = new Size(195, 26);
+            colorTSM.Size = new Size(224, 26);
             colorTSM.Text = "Color de Fondo";
             colorTSM.Click += colorTSM_Click;
             // 
@@ -129,9 +128,7 @@
             dgvDatos.RowHeadersWidth = 51;
             dgvDatos.Size = new Size(811, 360);
             dgvDatos.TabIndex = 0;
-            dgvDatos.CellContentClick += dgvDatos_CellContentClick;
-            dgvDatos.RowLeave += dgvDatos_RowLeave;
-            dgvDatos.UserDeletedRow += dgvDatos_UserDeletedRow;
+         
             // 
             // Nombre
             // 
@@ -175,16 +172,6 @@
             Correo.Name = "Correo";
             Correo.Width = 125;
             // 
-            // butGuardar
-            // 
-            butGuardar.Location = new Point(238, 454);
-            butGuardar.Name = "butGuardar";
-            butGuardar.Size = new Size(170, 61);
-            butGuardar.TabIndex = 3;
-            butGuardar.Text = "Guardar";
-            butGuardar.UseVisualStyleBackColor = true;
-            butGuardar.Click += butGuardar_Click;
-            // 
             // butCargar
             // 
             butCargar.Location = new Point(426, 455);
@@ -206,7 +193,6 @@
             BackColor = Color.LavenderBlush;
             ClientSize = new Size(862, 571);
             Controls.Add(butCargar);
-            Controls.Add(butGuardar);
             Controls.Add(statusStrip1);
             Controls.Add(dgvDatos);
             Controls.Add(menuStrip1);
@@ -215,7 +201,6 @@
             Margin = new Padding(4, 5, 4, 5);
             Name = "Form1";
             Text = "Agenda";
-            Load += Form1_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             statusStrip1.ResumeLayout(false);
@@ -243,7 +228,6 @@
         private DataGridViewTextBoxColumn Direccion;
         private DataGridViewTextBoxColumn Tel;
         private DataGridViewTextBoxColumn Correo;
-        private Button butGuardar;
         private Button butCargar;
         private SaveFileDialog sfdJason;
         private OpenFileDialog ofdJason;

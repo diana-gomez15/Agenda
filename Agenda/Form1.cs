@@ -100,26 +100,7 @@ namespace Practica1_Agenda
             SLRegistros.Text = $"Registros: {registros.TotalRegistros}";
             SLFecha.Text = $"Última actualización: {registros.UltimaActualizacion:dd/MM/yyyy HH:mm:ss}";
         }
-
-
-        private void butGuardar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var baseDatos = cargardatos(); 
-                if (sfdJason.ShowDialog() == DialogResult.OK)
-                {
-                    guardarJson(baseDatos);
-                    ActualizarStatus(baseDatos);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, "Sistema",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+ 
         private void butCargar_Click(object sender, EventArgs e)
         {
 
