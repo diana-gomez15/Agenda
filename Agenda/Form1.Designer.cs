@@ -105,7 +105,6 @@
             statusStrip1.Size = new Size(862, 26);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
-            statusStrip1.ItemClicked += statusStrip1_ItemClicked;
             // 
             // SLRegistros
             // 
